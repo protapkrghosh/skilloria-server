@@ -21,6 +21,14 @@ async function run() {
    try {
       // await client.connect();
 
+      const usersCollection = client.db("skilloriaDB").collection("users");
+
+      app.post("/users", async (req, res) => {
+         const user = req.body;
+         const result = await usersCollection.insertOne(user);
+         res.send(result);
+      });
+
       await client.db("admin").command({ ping: 1 });
       console.log(
          "Pinged your deployment. You successfully connected to MongoDB!"
